@@ -1,5 +1,5 @@
 # sovereign-network-defense
-sovereign-network-defense
+
 Open-source cybersecurity detection and defense system for individuals operating on untrusted networks.
 Monitors inbound threats, port scans, unauthorized file access, and suspicious processes with real-time alerts, evidence logging, and automatic blocking capabilities.
 Why This Exists
