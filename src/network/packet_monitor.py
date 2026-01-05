@@ -9,11 +9,17 @@ from datetime import datetime
 from collections import defaultdict
 import time
 import os
+import sys
+
+# Import alert system
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from alert_system import AlertSystem
 
 class PacketMonitor:
     def __init__(self, log_dir='logs', alert_callback=None):
         self.log_dir = log_dir
         self.alert_callback = alert_callback
+        self.alert_system = AlertSystem(log_dir=log_dir)
         
         # Track connection attempts per source IP
         self.scan_tracker = defaultdict(lambda: {
@@ -31,19 +37,9 @@ class PacketMonitor:
         os.makedirs(self.log_dir, exist_ok=True)
         
     def log_alert(self, message, severity="PACKET_ALERT"):
-        """Log packet-level alerts"""
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        log_message = f"[{timestamp}] [{severity}] {message}"
-        
-        # Print to console
-        print(f"\n{'='*70}")
-        print(f"🚨 {severity}: {message}")
-        print(f"{'='*70}\n")
-        
-        # Write to log
-        log_file = os.path.join(self.log_dir, 'packet_alerts.log')
-        with open(log_file, 'a') as f:
-            f.write(log_message + '\n')
+        """Log packet-level alerts with sound and notifications"""
+        # Use the multi-channel alert system
+        self.alert_system.send_alert(message, severity=severity)
         
         # Callback to main monitor if provided
         if self.alert_callback:
