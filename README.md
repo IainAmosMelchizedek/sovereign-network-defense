@@ -157,7 +157,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## Security
 
-If you discover a security vulnerability, please email security@safepassagestrategies.com. Do not open a public issue.
+If you discover a security vulnerability, please email iain@safe-passage-strategies.com. Do not open a public issue.
 
 ## License
 
