@@ -111,8 +111,13 @@ class FileAccessMonitor(FileSystemEventHandler):
 def start_monitoring(paths_to_monitor=None):
     """Start file monitoring on specified paths"""
     if not paths_to_monitor:
-        # Default: monitor user's home directory critical folders
-        home = os.path.expanduser("~")
+        # Get the actual user's home directory when running with sudo
+        actual_user = os.environ.get('SUDO_USER', os.environ.get('USER'))
+        if actual_user and actual_user != 'root':
+            home = os.path.expanduser(f"~{actual_user}")
+        else:
+            home = os.path.expanduser("~")
+        
         paths_to_monitor = [
             os.path.join(home, "Documents"),
             os.path.join(home, "Downloads"),
@@ -154,3 +159,4 @@ def start_monitoring(paths_to_monitor=None):
 
 if __name__ == "__main__":
     start_monitoring()
+

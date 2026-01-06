@@ -14,6 +14,7 @@ sys.path.append('src')
 
 from network.unified_monitor import UnifiedMonitor
 from files.file_monitor import start_monitoring as start_file_monitor
+from process.process_monitor import ProcessMonitor
 
 
 class SovereignDefense:
@@ -36,6 +37,7 @@ class SovereignDefense:
         print("  ✓ Network Monitor (Layer 1: Connections)")
         print("  ✓ Packet Monitor (Layer 2: Raw packets)")
         print("  ✓ File Access Monitor (Documents, Downloads, Desktop)")
+        print("  ✓ Process Monitor (CPU, Memory, Suspicious processes)")
         print("="*70)
         print("\nAll systems active. Press Ctrl+C to stop all monitors.\n")
         
@@ -45,6 +47,14 @@ class SovereignDefense:
             daemon=True
         )
         file_thread.start()
+        
+        # Start process monitor in a thread
+        process_monitor = ProcessMonitor()
+        process_thread = threading.Thread(
+            target=process_monitor.monitor,
+            daemon=True
+        )
+        process_thread.start()
         
         # Start unified network monitor (blocks in main thread)
         network_monitor = UnifiedMonitor()
