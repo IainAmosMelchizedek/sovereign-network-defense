@@ -7,8 +7,11 @@ Combines connection-level and packet-level monitoring
 import threading
 import signal
 import sys
-from monitor import NetworkMonitor
-from packet_monitor import PacketMonitor
+import os
+
+# Fix imports to use relative paths
+from network.monitor import NetworkMonitor
+from network.packet_monitor import PacketMonitor
 
 class UnifiedMonitor:
     def __init__(self, log_dir='logs'):
